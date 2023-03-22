@@ -1,0 +1,10 @@
+<launch>
+
+  <!-- temp_gen_node -->
+  <node name="template_build_node" pkg="wpr_rack_pkg" type="template_build_node" output="screen"/>
+
+  <!--- RViz  -->
+  <arg name="rvizconfig" default="$(find wpr_rack_pkg)/rviz/rd.rviz" />
+  <node name="rviz_tb" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
+</launch>

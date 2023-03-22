@@ -1,0 +1,11 @@
+<launch>
+  
+  <!--- Run wpb_home  -->
+  <include file="$(find wpb_home_bringup)/launch/normal.launch" />
+
+  <node pkg="wpb_home_behaviors" type="wpb_home_place_action" name="wpb_home_place_action" output="screen"/>
+
+  <!-- rack_mani_node -->
+  <node name="rack_mani_node" pkg="wpr_rack_pkg" type="rack_mani_node" output="screen"/>
+
+</launch>

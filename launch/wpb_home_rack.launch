@@ -1,0 +1,29 @@
+<launch>
+  
+  <!--- Run Kinect -->
+  <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" />
+
+  <!--- Run wpb_home  -->
+  <include file="$(find wpb_home_bringup)/launch/normal.launch" />
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
+    <rosparam command="load" file="$(find wpb_home_bringup)/config/wpb_home.yaml" />
+  </node>
+  
+  <node pkg="wpb_home_behaviors" type="wpb_home_grab_action" name="wpb_home_grab_action">
+    <rosparam file="$(find wpb_home_bringup)/config/wpb_home.yaml" command="load" />
+  </node>
+
+  <node pkg="wpb_home_behaviors" type="wpb_home_place_action" name="wpb_home_place_action"/>
+
+  <!-- rack_detect_node -->
+  <node name="rack_detect_node" pkg="wpr_rack_pkg" type="rack_detect_node" />
+
+  <!-- wpb_home_rack_node -->
+  <node name="wpb_home_rack_node" pkg="wpr_rack_pkg" type="wpb_home_rack_node" output="screen"/>
+
+  <!--- RViz  -->
+  <arg name="rvizconfig" default="$(find wpr_rack_pkg)/rviz/wpb_home.rviz" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
+</launch>

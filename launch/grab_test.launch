@@ -1,0 +1,15 @@
+<launch>
+  
+
+  <!--- Run WPR1 Minimal -->
+  <include file="$(find wpr1_bringup)/launch/base_mani_imu_lidar.launch" />
+  
+  <node pkg="wpr1_behaviors" type="wpr1_grab_action" name="wpr1_grab_action" output="screen"/>
+  <node pkg="wpr1_behaviors" type="wpr1_place_action" name="wpr1_place_action"/>
+
+
+  <!-- wpr1_storage_rack -->
+  <node name="wpr1_storage_rack" pkg="wpr_rack_pkg" type="wpr1_storage_rack" output="screen"/>
+
+
+</launch>

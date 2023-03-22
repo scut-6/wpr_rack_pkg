@@ -1,0 +1,22 @@
+<launch>
+  
+  <!--- Run Kinect -->
+  <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" />
+
+  <!--- Run WPR1 Minimal -->
+  <include file="$(find wpr1_bringup)/launch/base_mani_imu_lidar.launch" />
+  
+  <node pkg="wpr1_behaviors" type="wpr1_grab_rack" name="wpr1_grab_rack" output="screen"/>
+  <node pkg="wpr1_behaviors" type="wpr1_place_action" name="wpr1_place_action"/>
+
+  <!-- rack_detect_node -->
+  <node name="rack_detect_node" pkg="wpr_rack_pkg" type="rack_detect_node" />
+
+  <!-- wpr1_storage_rack -->
+  <node name="wpr1_storage_rack" pkg="wpr_rack_pkg" type="wpr1_storage_rack" output="screen"/>
+
+  <!--- RViz  -->
+  <arg name="rvizconfig" default="$(find wpr_rack_pkg)/rviz/wpr1.rviz" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
+</launch>

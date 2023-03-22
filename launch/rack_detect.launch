@@ -1,0 +1,11 @@
+<launch>
+
+  <!-- rack_detect_node -->
+  <node name="rack_detect_node" pkg="wpr_rack_pkg" type="rack_detect_node" output="screen"/>
+
+
+  <!--- RViz  -->
+  <arg name="rvizconfig" default="$(find wpr_rack_pkg)/rviz/rd.rviz" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
+</launch>

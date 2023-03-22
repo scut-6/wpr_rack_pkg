@@ -1,0 +1,27 @@
+<launch>
+  <arg name="model" default="$(find wpb_home_bringup)/urdf/wpb_home.urdf"/>
+  <arg name="gui" default="true" />
+
+  <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
+  <param name="use_gui" value="$(arg gui)"/>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
+    <rosparam command="load" file="$(find wpb_home_bringup)/config/wpb_home.yaml" />
+  </node>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <!--- Run Kinect bag -->
+  <node pkg="rosbag" type="play" name="bag_play" args="-l --clock /home/robot/rosbag/obj_3.bag"/>
+  <param name="/use_sim_time" value="true"/>
+
+  <!-- rack_detect_node -->
+  <node name="rack_detect_node" pkg="wpr_rack_pkg" type="rack_detect_node" output="screen"/>
+
+  <!-- wpb_home_rack_node -->
+  <node name="wpb_home_rack_node" pkg="wpr_rack_pkg" type="wpb_home_rack_node" />
+
+  <!--- RViz  -->
+  <arg name="rvizconfig" default="$(find wpr_rack_pkg)/rviz/wpb_home.rviz" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
+</launch>
